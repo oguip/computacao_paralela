@@ -7,7 +7,7 @@ Grupo GGD+
 <br>Guilherme de Oliveira Pereira 32165366
 
 <br>Laboratório 01a
-<br>Para compilar: gcc HelloWorld.c -o HelloWorld
+<br>Para compilar: ```gcc HelloWorld.c -o HelloWorld```
 <br>Para executar: ./HelloWorld
 
 Comprovação que deu certo:
