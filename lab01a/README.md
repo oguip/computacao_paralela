@@ -11,4 +11,4 @@ Para compilar: gcc HelloWorld.c -o HelloWorld
 Para executar: ./HelloWorld
 
 Comprovação que deu certo:
-![Prova](\Lab01a_Prova.PNG)
+![Prova](/Lab01a_Prova.PNG)
