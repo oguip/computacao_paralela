@@ -8,7 +8,7 @@ Grupo GGD+
 
 <br>Laboratório 01a
 <br>Para compilar: ```gcc HelloWorld.c -o HelloWorld```
-<br>Para executar: ./HelloWorld
+<br>Para executar: ```./HelloWorld```
 
 Comprovação que deu certo:
-![Prova](/computacao_paralela/lab01a/Lab01a_Prova.PNG)
+![Prova](Lab01a_Prova.PNG)
