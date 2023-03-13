@@ -2,27 +2,23 @@
 #include <stdlib.h>
 
 int main() {
-  char *n1 = (char *)malloc(sizeof(char));
-  char *n2 = (char *)malloc(sizeof(char));
+  char n1[100];
+  char n2[100];
   int i = 0;
   printf("Digite o primeiro nome: ");
-  gets(n1);
+  fgets(n1, 100, stdin);
   printf("Digite o segundo nome: ");
-  gets(n2);
+  fgets(n2, 100, stdin);
   while (n1[i] != '\0' && n2[i] != '\0') {
     if (n1[i] < n2[i]) {
       printf("%s\n%s", n1, n2);
-      i++;
       break;
-    } else {
+    } if (n2[i] < n1[i]) {
       printf("%s\n%s", n2, n1);
-      i++;
       break;
-    }
-    i++;
+    } else i++;
+    
   }
   printf("\n");
-  free(n1);
-  free(n2);
   return 0;
 }
