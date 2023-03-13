@@ -12,4 +12,5 @@ int main() {
     int letra = 'e';
     int posicao = buscar(str, letra);
     printf("%d\n", posicao+1);
+    return 0;
 }
