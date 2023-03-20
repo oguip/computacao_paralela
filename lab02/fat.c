@@ -7,7 +7,7 @@ int pai(int j, int i) {
   for (i = 1; j > aux/2; j--) {
     i = i * j;
   }
-  printf("\nVALOR PAI: %d\n",i);
+  //printf("\nVALOR PAI: %d\n",i);
   return i;
 }
 
@@ -16,7 +16,7 @@ int filho(int j, int i) {
   for (i = 1; j > 1; j--) {
     i = i * j;
   }
-  printf("\nVALOR FILHO: %d\n",i);
+  //printf("\nVALOR FILHO: %d\n",i);
   return i;
 }
 
