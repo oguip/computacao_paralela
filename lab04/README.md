@@ -16,7 +16,8 @@ Grupo GGD+
 ![image](https://user-images.githubusercontent.com/83314109/232643941-a803b291-62c0-472a-95b6-2a2f1ecae25e.png)
 <br>E aqui podemos visualizar que em alguns momentos a execução serial ganha e outros que a paralela ganha:
 ![image1](https://user-images.githubusercontent.com/83314109/232643952-307da724-5227-4a79-b449-f3e924a6749d.png)
-<br>Na comparação das primeiras execuções (primeira serial e primeira paralela), temos o speedud (Ts/Tp) de (vou usar o real): 0,86, ou seja, perdemos desempenho
-<br>porém na segunda execução: 1,11, ou seja, ganhamos desempenho.
-<br>na terceira: 1, não mudou nada
-<br>e na quarta: 1 também.
+<br>Na comparação dos tempos temos o speedud (Ts/Tp) de (vou usar o real): 
+<br>1º: 0,86, ou seja, perdemos desempenho.
+<br>2º: 1,11, ou seja, ganhamos desempenho.
+<br>3º: 1, não mudou nada.
+<br>4º: 1 também.
