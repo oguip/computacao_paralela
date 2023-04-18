@@ -12,10 +12,10 @@ Grupo GGD+
 <br>Para compilar o paralelo: ```gcc trapp.c -o trapp -fopenmp -lm```
 <br>Para executar o paralelo: ```time ./trapp 2```
 <br>OBS:O trapp é o que tem opemmp implementado, e o traps é o serial. O 2 apos o trapp significa que vai rodar em 2 threads, e o time é para calcular o tempo.
-<br>Aqui podemos visualizar que em alguns momentos a execução serial ganha e outros que a paralela ganha:
-
+<br>Aqui podemos visualizar uma comparação com certos valores:
+<br>![Capturar2](https://user-images.githubusercontent.com/83314109/232786280-011fb658-cda4-4dda-bd05-e094cb6e06e6.PNG)
 <br>Na comparação dos tempos temos o speedud (Ts/Tp) de (vou usar o real): 
-<br>1º: 0,86, ou seja, perdemos desempenho.
-<br>2º: 1,11, ou seja, ganhamos desempenho.
-<br>3º: 1, não mudou nada.
-<br>4º: 1 também.
+<br>1º: 1,813079551000488, ou seja, ganhamos desempenho, quase o dobro.
+<br>Agora com outros valores:
+<br>![Capturar3](https://user-images.githubusercontent.com/83314109/232786415-113a185c-c0e1-4674-b495-c555c5059f35.PNG)
+<br>2º: 1,58241469816273, ou seja, ganhamos desempenho de novo.
