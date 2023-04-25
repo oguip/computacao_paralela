@@ -12,7 +12,6 @@ void Trap(double a, double b, int n, double* global_result_p) {
   double local_a, local_b;
   int i, local_n;
   int my_rank = omp_get_thread_num();
-  printf("My Rank: %d\n", my_rank);
   int thread_count = omp_get_num_threads();
   h = (b-a)/n;
   local_n = n/thread_count;
@@ -24,7 +23,6 @@ void Trap(double a, double b, int n, double* global_result_p) {
     my_result += f(x);
   }
   my_result *= n;
-  #pragma omp critial;
   *global_result_p += my_result;
 }
 
@@ -37,7 +35,6 @@ int main(int argc, char *argv[]) {
   //thread_count = 2;
   printf("Insira a, b e n: \n");
   scanf("%lf %lf %d", &a, &b, &n);
-  #pragma omp parallel num_threads(thread_count)
   Trap(a,b,n,&global_result);
   printf("Com %d trapézios, nossa estimativa da integral de %f até %f = %14e\n",n,a,b,global_result);
   return 0;
