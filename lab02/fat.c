@@ -33,8 +33,9 @@ int main(){
       return -1 ;
   }
 
-  printf("Enter the number: ");
-  scanf("%d", &num);
+  //printf("Enter the number: ");
+  //scanf("%d", &num);
+  num= 10;
   j = num;
   pid = fork();
 
