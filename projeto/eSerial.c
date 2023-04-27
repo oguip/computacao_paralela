@@ -5,7 +5,7 @@
 
 
 void fatorial(mpf_t* result, int x) {
-    mpf_init(*result);
+    mpf_init2(*result,1024);
     mpf_set_ui(*result, 1);
 
     for(int i = 2; i <= x; i++) {
@@ -21,8 +21,8 @@ void fatorial(mpf_t* result, int x) {
 
 void serieTaylor(mpf_t *e, mpf_t x, int n){
     mpf_t fat, fate;
-    mpf_init(fat);
-    mpf_init(fate);
+    mpf_init2(fat,1024);
+    mpf_init2(fate,1024);
     mpf_set_ui(fat,0);
     mpf_set_ui(fate,0);
     //long double e = 0;
@@ -41,14 +41,16 @@ void serieTaylor(mpf_t *e, mpf_t x, int n){
 int main(void) {
     int n = 0;
     mpf_t e,x;
-    mpf_init(e);
-    mpf_init(x);
+    mpf_init2(e,1024);
+    mpf_init2(x,1024);
     mpf_set_ui(e,0);
     mpf_set_ui(x,1);
     printf("Insira o n: ");
     scanf("%d", &n);
     printf("Valor de n = %d\n",n);
     serieTaylor(&e,x,n);
-    gmp_printf("\nResultado: %.Ff\n",e);
+    gmp_printf("\nResultado: %.200Ff\n",e);
+    mpf_clear(e);
+    mpf_clear(x);
     return 0;
 }
