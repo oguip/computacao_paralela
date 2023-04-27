@@ -49,7 +49,7 @@ void save_to_file(mpf_t e, const char *filename) {
         perror("Erro ao abrir o arquivo");
         return;
     }
-    gmp_fprintf(file, "%.50000Ff\n", e);
+    gmp_fprintf(file, "%.500000Ff\n", e);
     fclose(file);
 }
 
