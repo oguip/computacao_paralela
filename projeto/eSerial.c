@@ -1,20 +1,54 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+#include <gmp.h>
 
-long double serieTaylor(int x, int n){
-  long double e;
-  for(int i = 0; i < n; i++){
-    e += x/tgamma(i);
-  }
-  return e;
+
+void fatorial(mpf_t* result, int x) {
+    mpf_init(*result);
+    mpf_set_ui(*result, 1);
+
+    for(int i = 2; i <= x; i++) {
+        mpf_t temp;
+        mpf_init(temp);
+        mpf_set_ui(temp, i);
+        mpf_mul(*result, *result, temp);
+        mpf_clear(temp);
+    }
+}
+
+
+
+void serieTaylor(mpf_t *e, mpf_t x, int n){
+    mpf_t fat, fate;
+    mpf_init(fat);
+    mpf_init(fate);
+    mpf_set_ui(fat,0);
+    mpf_set_ui(fate,0);
+    //long double e = 0;
+    for(int i = 0; i < n; i++){
+        fatorial(&fat,i); //Realizo o fatorial de i e armazeno em fat
+        mpf_div(fate,x,fat); //Realizo a divisao de X(1) com o fat 
+        mpf_add(*e,*e,fate); //Adiciono em e o valor dessa divisao
+        //mpf_add_ui(fat,fat,1);
+        //e += x/fatorial(i);
+        //gmp_printf("Valor atual do e: %Ff\n",e);
+        //printf("Valor atual de e = %Lf\n",e);
+    }
 }
 
 
 int main(void) {
-  int x = 1;
-  int n;
-  printf("Insira o n: ");
-  scanf("%d", &n);
-  printf("\nResultado: %.100Lf\n",serieTaylor(x,n));
-  return 0;
+    int n = 0;
+    mpf_t e,x;
+    mpf_init(e);
+    mpf_init(x);
+    mpf_set_ui(e,0);
+    mpf_set_ui(x,1);
+    printf("Insira o n: ");
+    scanf("%d", &n);
+    printf("Valor de n = %d\n",n);
+    serieTaylor(&e,x,n);
+    gmp_printf("\nResultado: %.Ff\n",e);
+    return 0;
 }
