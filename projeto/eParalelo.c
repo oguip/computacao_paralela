@@ -30,9 +30,9 @@ void serieTaylor(mpf_t *e, mpf_t x, int n) {
     int thread_count = omp_get_num_threads();
     local_n = (n + 1) / thread_count * (my_rank + 1);
     local_i = (n + 1) / thread_count * my_rank;
-    printf("MY RANK:%d\n", my_rank);
-    printf("thread_count:%d\n", thread_count);
-    printf("local_i: %d local_n: %d\n", local_i, local_n);
+    //printf("MY RANK:%d\n", my_rank);
+    //printf("thread_count:%d\n", thread_count);
+    //printf("local_i: %d local_n: %d\n", local_i, local_n);
     for (int i = local_i; i < local_n; i++) {
         fatorial(&fat,i); //Realizo o fatorial de i e armazeno em fat
         mpf_div(fate,x,fat); //Realizo a divisao de X(1) com o fat 
@@ -41,6 +41,16 @@ void serieTaylor(mpf_t *e, mpf_t x, int n) {
     #pragma omp critical
     mpf_add(*e,*e,elocal);
     //*global_e += e;
+}
+
+void save_to_file(mpf_t e, const char *filename) {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return;
+    }
+    gmp_fprintf(file, "%.50000Ff\n", e);
+    fclose(file);
 }
 
 int main(int argc, char *argv[]) {
@@ -57,7 +67,8 @@ int main(int argc, char *argv[]) {
     printf("Valor de n = %d\n",n);
     #pragma omp parallel num_threads(thread_count)
     serieTaylor(&e,x,n);
-    gmp_printf("\nResultado: %.50000Ff\n",e);
+    gmp_printf("\nResultado: %.500000Ff\n",e);
+    save_to_file(e, "resultado.txt");
     mpf_clear(e);
     mpf_clear(x);
     return 0;
