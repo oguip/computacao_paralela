@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
     printf("Valor de n = %d\n",n);
     #pragma omp parallel num_threads(thread_count)
     serieTaylor(&e,x,n);
-    gmp_printf("\nResultado: %.500000Ff\n",e);
+    gmp_printf("\nResultado salvo!\n");
     save_to_file(e, "resultado.txt");
     mpf_clear(e);
     mpf_clear(x);

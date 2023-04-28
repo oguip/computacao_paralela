@@ -17,37 +17,40 @@ void fatorial(mpf_t* result, int x) {
     }
 }
 
-void serieTaylor(mpf_t *e, mpf_t x, int n, int thread_count) {
-    mpf_t elocal;
+void serieTaylor(mpf_t *e, mpf_t x, int n) {
+    mpf_t fat, fate, elocal;
+    mpf_init2(fat,2097152);
+    mpf_init2(fate,2097152);
     mpf_init2(elocal,2097152);
+    mpf_set_ui(fat,0);
+    mpf_set_ui(fate,0);
     mpf_set_ui(elocal,0);
-
-    #pragma omp parallel num_threads(thread_count)
-    {
-        mpf_t fat, fate;
-        mpf_init2(fat,2097152);
-        mpf_init2(fate,2097152);
-        mpf_set_ui(fat,0);
-        mpf_set_ui(fate,0);
-
-        int my_rank = omp_get_thread_num();
-        int local_i, local_n;
-        local_n = (n + 1) / thread_count * (my_rank + 1);
-        local_i = (n + 1) / thread_count * my_rank;
-
-        for (int i = local_i; i < local_n; i++) {
-            fatorial(&fat, i);
-            mpf_div(fate, x, fat);
-            #pragma omp critical
-            mpf_add(elocal, elocal, fate);
+    int local_i, local_n;
+    int my_rank = omp_get_thread_num();
+    int thread_count = omp_get_num_threads();
+    //local_n = (n + 1) / thread_count * (my_rank + 1);
+    //local_i = (n + 1) / thread_count * my_rank;
+    //printf("MY RANK:%d\n", my_rank);
+    //printf("thread_count:%d\n", thread_count);
+    //printf("local_i: %d local_n: %d\n", local_i, local_n);
+    if(my_rank == 0){
+        for (int i = 0; i < n; i+=2) {
+            fatorial(&fat,i); //Realizo o fatorial de i e armazeno em fat
+            mpf_div(fate,x,fat); //Realizo a divisao de X(1) com o fat 
+            mpf_add(elocal,elocal,fate); //Adiciono em e o valor dessa divisao
         }
-
-        mpf_clear(fat);
-        mpf_clear(fate);
     }
-
-    mpf_set(*e, elocal);
-    mpf_clear(elocal);
+    else{
+        for (int i = 1; i <= n; i+=2) {
+            fatorial(&fat,i); //Realizo o fatorial de i e armazeno em fat
+            mpf_div(fate,x,fat); //Realizo a divisao de X(1) com o fat 
+            mpf_add(elocal,elocal,fate); //Adiciono em e o valor dessa divisao
+        }
+    }
+    
+    #pragma omp critical
+    mpf_add(*e,*e,elocal);
+    //*global_e += e;
 }
 
 void save_to_file(mpf_t e, const char *filename) {
@@ -62,23 +65,21 @@ void save_to_file(mpf_t e, const char *filename) {
 
 int main(int argc, char *argv[]) {
     int n = 0;
-    mpf_t e, x;
-    mpf_init2(e, 2097152);
-    mpf_init2(x, 2097152);
-    mpf_set_ui(e, 0);
-    mpf_set_ui(x, 1);
+    mpf_t e,x;
+    mpf_init2(e,2097152);
+    mpf_init2(x,2097152);
+    mpf_set_ui(e,0);
+    mpf_set_ui(x,1);
     int thread_count;
     thread_count = strtol(argv[1], NULL, 10);
     printf("Insira o n: ");
     scanf("%d", &n);
-    printf("Valor de n = %d\n", n);
+    printf("Valor de n = %d\n",n);
     #pragma omp parallel num_threads(thread_count)
-    serieTaylor(&e, x, n, thread_count);
-
-    gmp_printf("Resultado salvo!");
+    serieTaylor(&e,x,n);
+    gmp_printf("\nResultado salvo!\n");
     save_to_file(e, "resultado.txt");
     mpf_clear(e);
     mpf_clear(x);
     return 0;
 }
-
