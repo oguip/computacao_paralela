@@ -41,8 +41,8 @@ void serieTaylor(mpf_t *e, mpf_t x, int n, mpf_t *fatorial_cache) {
         }
 
         mpf_t term, elocal;
-        mpf_init2(term, 8388608);
-        mpf_init2(elocal, 8388608);
+        mpf_init2(term, 16777216);
+        mpf_init2(elocal, 16777216);
         mpf_set_ui(term, 1);
         mpf_set_ui(elocal, 0);
 
@@ -80,8 +80,8 @@ void save_to_file(mpf_t e, const char *filename) {
 int main() {
     int n = 0;
     mpf_t e, x;
-    mpf_init2(e, 8388608);
-    mpf_init2(x, 8388608);
+    mpf_init2(e, 16777216);
+    mpf_init2(x, 16777216);
     mpf_set_ui(e, 0);
     mpf_set_ui(x, 1);
 
