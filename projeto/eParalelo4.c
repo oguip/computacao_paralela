@@ -27,8 +27,6 @@ void next_fatorial(mpf_t *result, int x, mpf_t *cache) {
     }
 }
 
-
-
 void serieTaylor(mpf_t *e, mpf_t x, int n, mpf_t *fatorial_cache) {
     int thread_count = omp_get_max_threads();
 
@@ -42,39 +40,30 @@ void serieTaylor(mpf_t *e, mpf_t x, int n, mpf_t *fatorial_cache) {
             end = n;
         }
 
-        mpf_t fat, fate, elocal;
-        mpf_init2(fat, 2097152);
-        mpf_init2(fate, 2097152);
+        mpf_t term, elocal;
+        mpf_init2(term, 2097152);
         mpf_init2(elocal, 2097152);
-        mpf_set_ui(fat, 1);
-        mpf_set_ui(fate, 0);
+        mpf_set_ui(term, 1);
         mpf_set_ui(elocal, 0);
 
         for (int i = 0; i <= end; ++i) {
             if (i >= start) {
-                if (i > 0) {
-                    next_fatorial(&fat, i, fatorial_cache);
-                }
-                if (mpf_sgn(fat) != 0) { // Verifica se fat não é zero
-                    mpf_div(fate, x, fat);
-                    mpf_add(elocal, elocal, fate);
-                }
+                mpf_add(elocal, elocal, term);
+                mpf_mul(term, term, x);
+                mpf_div_ui(term, term, i + 1);
             } else {
-                if (i > 0) {
-                    next_fatorial(&fat, i, fatorial_cache);
-                }
+                mpf_mul(term, term, x);
+                mpf_div_ui(term, term, i + 1);
             }
         }
 
         #pragma omp critical
         mpf_add(*e, *e, elocal);
 
-        mpf_clear(fat);
-        mpf_clear(fate);
+        mpf_clear(term);
         mpf_clear(elocal);
     }
 }
-
 
 
 
