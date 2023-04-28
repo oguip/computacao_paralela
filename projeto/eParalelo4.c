@@ -18,49 +18,64 @@ void clear_fatorial_cache(mpf_t *cache, int max_n) {
     free(cache);
 }
 
-void fatorial(mpf_t *result, int x, mpf_t *cache) {
+void next_fatorial(mpf_t *result, int x, mpf_t *cache) {
     if (x == 0 || x == 1) {
         mpf_set_ui(*result, 1);
-    } else if (mpf_sgn(cache[x]) != 0) {
-        mpf_set(*result, cache[x]);
     } else {
-        fatorial(result, x - 1, cache);
+        mpf_set(*result, cache[x - 1]);
         mpf_mul_ui(*result, *result, x);
-        mpf_set(cache[x], *result);
     }
 }
+
 
 
 void serieTaylor(mpf_t *e, mpf_t x, int n, mpf_t *fatorial_cache) {
-    mpf_t fat, fate, elocal;
-    mpf_init2(fat,2097152);
-    mpf_init2(fate,2097152);
-    mpf_init2(elocal,2097152);
-    mpf_set_ui(fat,0);
-    mpf_set_ui(fate,0);
-    mpf_set_ui(elocal,0);
-    int local_i, local_n;
-    int my_rank = omp_get_thread_num();
-    int thread_count = omp_get_num_threads();
+    int thread_count = omp_get_max_threads();
 
-    if(my_rank == 0){
-        for (int i = 0; i < n; i+=2) {
-            fatorial(&fat,i, fatorial_cache); //Realizo o fatorial de i e armazeno em fat
-            mpf_div(fate,x,fat); //Realizo a divisao de X(1) com o fat 
-            mpf_add(elocal,elocal,fate); //Adiciono em e o valor dessa divisao
+    #pragma omp parallel num_threads(thread_count)
+    {
+        int my_rank = omp_get_thread_num();
+        int local_n = n / thread_count;
+        int start = my_rank * local_n;
+        int end = (my_rank + 1) * local_n - 1;
+        if (my_rank == thread_count - 1) {
+            end = n;
         }
-    }
-    else{
-        for (int i = 1; i <= n; i+=2) {
-            fatorial(&fat,i, fatorial_cache); //Realizo o fatorial de i e armazeno em fat
-            mpf_div(fate,x,fat); //Realizo a divisao de X(1) com o fat 
-            mpf_add(elocal,elocal,fate); //Adiciono em e o valor dessa divisao
+
+        mpf_t fat, fate, elocal;
+        mpf_init2(fat, 2097152);
+        mpf_init2(fate, 2097152);
+        mpf_init2(elocal, 2097152);
+        mpf_set_ui(fat, 1);
+        mpf_set_ui(fate, 0);
+        mpf_set_ui(elocal, 0);
+
+        for (int i = 0; i <= end; ++i) {
+            if (i >= start) {
+                if (i > 0) {
+                    next_fatorial(&fat, i, fatorial_cache);
+                }
+                if (mpf_sgn(fat) != 0) { // Verifica se fat não é zero
+                    mpf_div(fate, x, fat);
+                    mpf_add(elocal, elocal, fate);
+                }
+            } else {
+                if (i > 0) {
+                    next_fatorial(&fat, i, fatorial_cache);
+                }
+            }
         }
+
+        #pragma omp critical
+        mpf_add(*e, *e, elocal);
+
+        mpf_clear(fat);
+        mpf_clear(fate);
+        mpf_clear(elocal);
     }
-    
-    #pragma omp critical
-    mpf_add(*e,*e,elocal);
 }
+
+
 
 
 void save_to_file(mpf_t e, const char *filename) {
@@ -73,15 +88,14 @@ void save_to_file(mpf_t e, const char *filename) {
     fclose(file);
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     int n = 0;
     mpf_t e, x;
     mpf_init2(e, 2097152);
     mpf_init2(x, 2097152);
     mpf_set_ui(e, 0);
     mpf_set_ui(x, 1);
-    int thread_count;
-    thread_count = strtol(argv[1], NULL, 10);
+
     printf("Insira o n: ");
     scanf("%d", &n);
     printf("Valor de n = %d\n", n);
@@ -91,10 +105,11 @@ int main(int argc, char *argv[]) {
     serieTaylor(&e, x, n, fatorial_cache);
     clear_fatorial_cache(fatorial_cache, n);
 
-    gmp_printf("\nResultado salvo!\n");
+    gmp_printf("\nResultado: Salvo");
     save_to_file(e, "resultado.txt");
     mpf_clear(e);
     mpf_clear(x);
     return 0;
 }
+
 
