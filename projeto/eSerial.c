@@ -29,7 +29,7 @@ void next_fatorial(mpf_t *result, int x, mpf_t *cache) {
 
 void serieTaylor(mpf_t *e, mpf_t x, int n){
     mpf_t term, fate;
-    mpf_init2(term,2097152);
+    mpf_init2(term,16777216);
     mpf_set_ui(term,1);
     for(int i = 0; i < n; i++){
         mpf_add(*e, *e, term); 
@@ -52,8 +52,8 @@ void save_to_file(mpf_t e, const char *filename) {
 int main(void) {
     int n = 0;
     mpf_t e,x;
-    mpf_init2(e,2097152);
-    mpf_init2(x,2097152);
+    mpf_init2(e,16777216);
+    mpf_init2(x,16777216);
     mpf_set_ui(e,0);
     mpf_set_ui(x,1);
     printf("Insira o n: ");
