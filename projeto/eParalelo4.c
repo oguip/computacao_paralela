@@ -95,7 +95,7 @@ int main() {
     clear_fatorial_cache(fatorial_cache, n);
 
     gmp_printf("\nResultado: Salvo");
-    save_to_file(e, "resultado.txt");
+    save_to_file(e, "resultadoParalelo.txt");
     mpf_clear(e);
     mpf_clear(x);
     return 0;
