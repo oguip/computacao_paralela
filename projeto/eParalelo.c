@@ -28,7 +28,6 @@ void serieTaylor(mpf_t *e, mpf_t x, int n, int thread_count) {
 
         for (int i = start; i <= end; ++i) {
             mpf_add(elocal, elocal, term);
-            mpf_mul(term, term, x);
             mpf_div_ui(term, term, i + 1);
         }
         #pragma omp critical
