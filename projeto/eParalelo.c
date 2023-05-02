@@ -28,6 +28,7 @@ void serieTaylor(mpf_t *e, mpf_t x, int n, int thread_count) {
 
         for (int i = start; i <= end; ++i) {
             mpf_add(elocal, elocal, term);
+            mpf_mul_ui(term, term, 1);
             mpf_div_ui(term, term, i + 1);
         }
         #pragma omp critical
@@ -65,7 +66,7 @@ int main(int argc, char *argv[]) {
     serieTaylor(&e, x, n, thread_count);
 
     gmp_printf("\nResultado: Salvo");
-    save_to_file(e, "resultadoParaleloSemCache.txt");
+    save_to_file(e, "resultadoParalelo.txt");
     mpf_clear(e);
     mpf_clear(x);
     return 0;
