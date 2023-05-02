@@ -3,30 +3,6 @@
 #include <math.h>
 #include <gmp.h>
 
-
-void init_fatorial_cache(mpf_t **cache, int max_n) {
-    *cache = (mpf_t *)malloc((max_n + 1) * sizeof(mpf_t));
-    for (int i = 0; i <= max_n; i++) {
-        mpf_init((*cache)[i]);
-    }
-}
-
-void clear_fatorial_cache(mpf_t *cache, int max_n) {
-    for (int i = 0; i <= max_n; i++) {
-        mpf_clear(cache[i]);
-    }
-    free(cache);
-}
-
-void next_fatorial(mpf_t *result, int x, mpf_t *cache) {
-    if (x == 0 || x == 1) {
-        mpf_set_ui(*result, 1);
-    } else {
-        mpf_set(*result, cache[x - 1]);
-        mpf_mul_ui(*result, *result, x);
-    }
-}
-
 void serieTaylor(mpf_t *e, mpf_t x, int n){
     mpf_t term, fate;
     mpf_init2(term,16777216);
