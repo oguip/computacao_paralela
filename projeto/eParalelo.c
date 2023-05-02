@@ -22,15 +22,16 @@ void serieTaylor(mpf_t *e, mpf_t x, int n, int thread_count) {
         mpf_init2(elocal, 16777216);
         mpf_set_ui(term, 1);
         mpf_set_ui(elocal, 0);
-        
-        printf("\nEssa é a thread: %d", my_rank);
-        printf("\nCalculando de %d ate %d", start, end);
 
-        for (int i = start; i <= end; ++i) {
-            mpf_add(elocal, elocal, term);
-            mpf_mul_ui(term, term, 1);
-            mpf_div_ui(term, term, i + 1);
+        for (int i = 0; i <= end; ++i) {
+            if (i >= start) {
+                mpf_add(elocal, elocal, term);
+                mpf_div_ui(term, term, i + 1);
+            } else {
+                mpf_div_ui(term, term, i + 1);
+            }
         }
+
         #pragma omp critical
         mpf_add(*e, *e, elocal);
 
@@ -66,7 +67,7 @@ int main(int argc, char *argv[]) {
     serieTaylor(&e, x, n, thread_count);
 
     gmp_printf("\nResultado: Salvo");
-    save_to_file(e, "resultadoParalelo.txt");
+    save_to_file(e, "resultadoParaleloSemCache.txt");
     mpf_clear(e);
     mpf_clear(x);
     return 0;
