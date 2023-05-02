@@ -4,7 +4,7 @@
 #include <omp.h>
 #include <gmp.h>
 
-void serieTaylor(mpf_t *e, mpf_t x, int n, int thread_count) {
+void serieTaylor(mpf_t *e, int n, int thread_count) {
     printf("\nQuantiade de threads: %d\n",thread_count);
 
     #pragma omp parallel num_threads(thread_count)
@@ -54,21 +54,18 @@ void save_to_file(mpf_t e, const char *filename) {
 
 int main(int argc, char *argv[]) {
     int n = 0;
-    mpf_t e, x;
+    mpf_t e;;
     mpf_init2(e, 16777216);
-    mpf_init2(x, 16777216);
     mpf_set_ui(e, 0);
-    mpf_set_ui(x, 1);
     int thread_count = strtol(argv[1], NULL, 10);
     printf("Insira o n: ");
     scanf("%d", &n);
     printf("Valor de n = %d\n", n);
 
-    serieTaylor(&e, x, n, thread_count);
+    serieTaylor(&e, n, thread_count);
 
     gmp_printf("\nResultado: Salvo");
-    save_to_file(e, "resultadoParaleloSemCache.txt");
+    save_to_file(e, "resultadoParalelo.txt");
     mpf_clear(e);
-    mpf_clear(x);
     return 0;
 }
