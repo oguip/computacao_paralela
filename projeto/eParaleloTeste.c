@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
     serieTaylor(e, n, thread_count);
     gmp_printf("\nPrévia do resultado: %.15Ff",e);
     gmp_printf("\nResultado: Salvo");
-    save_to_file(e, "resultadoParalelo.txt");
+    save_to_file(e, "resultadoParaleloTeste.txt");
     mpf_clear(e);
     return 0;
 }
