@@ -7,7 +7,7 @@
 void fatorial(mpf_t resultado, int n){
     mpf_set_ui(resultado,1);
     #pragma opm parallel for reduction(*:*resultado)
-    for(int i = 2; i <= n; i++){
+    for(int i = 1; i <= n; i++){
         mpf_mul_ui(resultado,resultado,i);
     }
 }
@@ -36,7 +36,7 @@ void serieTaylor(mpf_t e, int n, int thread_count) {
                 mpf_add(elocal, elocal, term);
                 mpf_div_ui(term, term, i + 1);
             } else {
-                fatorial(term,start);
+                fatorial(term,start+1);
                 mpf_ui_div(term,1,term);
                 i = start;
             }
