@@ -1,44 +1,15 @@
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <omp.h>
 #include <gmp.h>
 
-
-void fatorial(mpf_t resultado, int n, int thread_count){
-    mpf_set_ui(resultado, 1);
-    
-    if (n <= 1) {
-        return;
+void fatorial(mpf_t resultado, int n){
+    mpf_set_ui(resultado,1);
+    #pragma opm parallel for reduction(*:*resultado)
+    for(int i = 1; i <= n; i++){
+        mpf_mul_ui(resultado,resultado,i);
     }
-
-    mpf_t *partial_results = malloc(thread_count * sizeof(mpf_t));
-    for (int i = 0; i < thread_count; ++i) {
-        mpf_init_set_ui(partial_results[i], 1);
-    }
-
-    #pragma omp parallel num_threads(thread_count)
-    {
-        int my_rank = omp_get_thread_num();
-        int local_n = n / thread_count;
-        int start = my_rank * local_n + 1;
-        int end = (my_rank + 1) * local_n;
-
-        if (my_rank == thread_count - 1) {
-            end = n;
-        }
-
-        for (int i = start; i <= end; i++) {
-            mpf_mul_ui(partial_results[my_rank], partial_results[my_rank], i);
-        }
-    }
-
-    for (int i = 0; i < thread_count; ++i) {
-        mpf_mul(resultado, resultado, partial_results[i]);
-        mpf_clear(partial_results[i]);
-    }
-
-    free(partial_results);
 }
 
 void serieTaylor(mpf_t e, int n, int thread_count) {
@@ -65,7 +36,7 @@ void serieTaylor(mpf_t e, int n, int thread_count) {
                 mpf_add(elocal, elocal, term);
                 mpf_div_ui(term, term, i + 1);
             } else {
-                fatorial(term,start,thread_count);
+                fatorial(term,start);
                 mpf_ui_div(term,1,term);
                 i = start;
             }
@@ -93,18 +64,16 @@ void save_to_file(mpf_t e, const char *filename) {
 
 int main(int argc, char *argv[]) {
     int n = 0;
-    mpf_t e;;
+    mpf_t e;
     mpf_init2(e, 16777216);
     mpf_set_ui(e, 0);
     int thread_count = strtol(argv[1], NULL, 10);
     printf("Insira o n: ");
     scanf("%d", &n);
     printf("Valor de n = %d\n", n);
-
     serieTaylor(e, n, thread_count);
-    gmp_printf("\nPrévia do resultado: %.15Ff",e);
-    gmp_printf("\nResultado: Salvo");
     save_to_file(e, "resultadoParaleloTeste.txt");
+    gmp_printf("\nPrévia do resultado: %.15Ff",e);
     mpf_clear(e);
     return 0;
 }
