@@ -7,7 +7,7 @@
 void fatorial(mpf_t resultado, int n){
     mpf_set_ui(resultado,1);
     #pragma opm parallel for reduction(*:*resultado)
-    for(int i = 1; i <= n; i++){
+    for(int i = 2; i <= n; i++){
         mpf_mul_ui(resultado,resultado,i);
     }
 }
