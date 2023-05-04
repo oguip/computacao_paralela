@@ -4,12 +4,6 @@
 #include <omp.h>
 #include <gmp.h>
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <omp.h>
-#include <gmp.h>
-
 void partial_sum(mpf_t result, int start, int end, int step) {
     mpf_t term, inv_term;
     mpf_init2(term, 16777216);
@@ -20,14 +14,18 @@ void partial_sum(mpf_t result, int start, int end, int step) {
     for (int i = start; i <= end; i += step) {
         mpf_ui_div(inv_term, 1, term);
         mpf_add(result, result, inv_term);
+
         for (int j = 0; j < step; ++j) {
-            mpf_div_ui(term, term, i + j + 1);
+            if (i + j + 1 <= end) {
+                mpf_div_ui(term, term, i + j + 1);
+            }
         }
     }
 
     mpf_clear(term);
     mpf_clear(inv_term);
 }
+
 
 void serieTaylor(mpf_t *e, int n, int thread_count) {
     printf("\nQuantidade de threads: %d\n", thread_count);
@@ -48,9 +46,6 @@ void serieTaylor(mpf_t *e, int n, int thread_count) {
     mpf_clear(partial_results[0]);
     mpf_clear(partial_results[1]);
 }
-
-// Restante do código...
-
 
 void save_to_file(mpf_t e, const char *filename) {
     FILE *file = fopen(filename, "w");
