@@ -4,7 +4,7 @@
 #include <omp.h>
 #include <gmp.h>
 
-void fatorial(mpf_t resultado, int n) {
+void factorial_gmp(int n, mpf_t resultado) {
     mpf_set_ui(resultado, 1); // Inicializa o resultado com 1
 
     for (int i = 2; i <= n; i++) {
@@ -35,7 +35,6 @@ void serieTaylor(mpf_t e, int n, int thread_count) {
         mpf_set_ui(elocal, 0);
         
         fatorial(term,start+1);
-        mpf_ui_div(term,1,term);
 
         for (int i = start; i <= end; ++i) {
             mpf_add(elocal, elocal, term);
