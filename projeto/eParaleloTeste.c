@@ -34,7 +34,7 @@ void serieTaylor(mpf_t e, int n, int thread_count) {
         mpf_set_ui(term, 1);
         mpf_set_ui(elocal, 0);
         
-        fatorial(term,start+1);
+        fatorial(term,start);
         mpf_ui_div(term,1,term);
 
         for (int i = start; i <= end; ++i) {
@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
     printf("Valor de n = %d\n", n);
     serieTaylor(e, n, thread_count);
     save_to_file(e, "resultadoParaleloTeste.txt");
+    printf("\nResultado salvo!");
     gmp_printf("\nPrévia do resultado: %.15Ff",e);
     mpf_clear(e);
     return 0;
