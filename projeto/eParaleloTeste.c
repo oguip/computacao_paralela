@@ -29,8 +29,8 @@ void serieTaylor(mpf_t e, int n, int thread_count) {
         }
         
         mpf_t term, elocal;
-        mpf_init2(term, 25165824);
-        mpf_init2(elocal, 25165824);
+        mpf_init2(term, 28511280);
+        mpf_init2(elocal, 28511280);
         mpf_set_ui(term, 1);
         mpf_set_ui(elocal, 0);
         
@@ -65,7 +65,7 @@ void save_to_file(mpf_t e, const char *filename) {
 int main(int argc, char *argv[]) {
     int n = 0;
     mpf_t e;
-    mpf_init2(e, 25165824);
+    mpf_init2(e, 28511280);
     mpf_set_ui(e, 0);
     int thread_count = strtol(argv[1], NULL, 10);
     printf("Insira o n: ");
