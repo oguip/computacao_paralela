@@ -6,7 +6,7 @@ Grupo GGD+
 <br>Gabriel Vicentin Negro 32137095
 <br>Guilherme de Oliveira Pereira 32165366
 
-<br>Projeto V1 Serial
+<br>Projeto V2 Paralelo
 <br>Nós utilizamos a máquina z1d.large para a execução do nosso programa, recomendamos que use a mesma.
 <br>Depois de clonar o git, é necessário instalar o gcc com os comandos abaixo:
 <br> ```sudo apt-get update``` -> ```sudo apt-get install build-essential```
