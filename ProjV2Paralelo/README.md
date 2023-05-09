@@ -26,6 +26,7 @@ Grupo GGD+
 <br>Paralelo: 
 <br>![image](https://user-images.githubusercontent.com/83314109/237041228-1876b4a5-1dd1-4bba-9c08-fc2277f0b6c7.png)
 <br>E para validarmos o resultado, utilizamos um código em python que eu estarei disponibilizando aqui, e comparamos com um arquivo que possui a constante ```e``` com 1 bilhão de casas de precisão, que baixamos desse site: https://archive.org/details/Math_Constants
+<br>Comparação dos arquivos:
 <br>![image](https://user-images.githubusercontent.com/83314109/237042200-ff818b92-86ee-45f0-b3b5-0f9bac43dd2e.png)
 
 
