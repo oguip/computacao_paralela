@@ -15,5 +15,5 @@ Grupo GGD+
 <br>Agora para compilar o programa: ```gcc eParalelo.c -o eParalelo -lm -lgmp -fopenmp```
 <br>Para executar: ```time ./eParalelo```
 <br>Aqui podemos visualizar a execução do programa:
-<br>![image](https://user-images.githubusercontent.com/83314109/235497078-136708bd-2c20-46b8-bbca-aa31168ed900.png)
+<br>![image](https://user-images.githubusercontent.com/83314109/236970739-81b4bb77-661c-4594-8d42-4e3e18f27e5c.png)
 <br>O resultado é salvo em resultadoSerial.txt, e nele você pode checar o número com 3 000 000 de digitos.
