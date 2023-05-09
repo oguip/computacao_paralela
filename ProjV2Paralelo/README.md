@@ -13,7 +13,8 @@ Grupo GGD+
 <br>Depois será necessário instalar a biblioteca gmp, que foi utilizado para alcançar números de maior precisão:
 <br>```sudo apt-get install libgmp-dev```
 <br>Agora para compilar o programa: ```gcc eParalelo.c -o eParalelo -lm -lgmp -fopenmp```
-<br>Para executar: ```time ./eParalelo```
+<br>Para executar: ```time ./eParalelo 2```
+<br>O número 2 indica a quantiade de threads que vou utilizar para rodar o programa.
 <br>Aqui podemos visualizar a execução do programa:
 <br>![image](https://user-images.githubusercontent.com/83314109/236970739-81b4bb77-661c-4594-8d42-4e3e18f27e5c.png)
-<br>O resultado é salvo em resultadoSerial.txt, e nele você pode checar o número com 3 000 000 de digitos.
+<br>O resultado é salvo em resultadoParalelo.txt, e nele você pode checar o número com 10 000 000 de digitos.
