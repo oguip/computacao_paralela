@@ -5,7 +5,7 @@
 
 void serieTaylor(mpf_t *e, int n){
     mpf_t term, fate;
-    mpf_init2(term,16777216);
+    mpf_init2(term,33554432);
     mpf_set_ui(term,1);
     for(int i = 0; i < n; i++){
         mpf_add(*e, *e, term); 
@@ -20,14 +20,14 @@ void save_to_file(mpf_t e, const char *filename) {
         perror("Erro ao abrir o arquivo");
         return;
     }
-    gmp_fprintf(file, "%.3000000Ff\n", e);
+    gmp_fprintf(file, "%.10000000Ff\n", e);
     fclose(file);
 }
 
 int main(void) {
     int n = 0;
     mpf_t e;
-    mpf_init2(e,16777216);
+    mpf_init2(e,33554432);
     mpf_set_ui(e,0);
     printf("Insira o n: ");
     scanf("%d", &n);
