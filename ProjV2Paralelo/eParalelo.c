@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     scanf("%d", &n);
     printf("Valor de n = %d\n", n);
     serieTaylor(e, n, thread_count);
-    save_to_file(e, "resultadoParaleloTeste.txt");
+    save_to_file(e, "resultadoParalelo.txt");
     printf("\nResultado salvo!");
     gmp_printf("\nPrévia do resultado: %.15Ff",e);
     mpf_clear(e);
