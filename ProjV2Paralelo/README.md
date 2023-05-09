@@ -18,7 +18,7 @@ Grupo GGD+
 <br>Aqui podemos visualizar a execução do programa:
 <br>![image](https://user-images.githubusercontent.com/83314109/236970739-81b4bb77-661c-4594-8d42-4e3e18f27e5c.png)
 <br>O resultado é salvo em resultadoParalelo.txt, e nele você pode checar o número com 10 000 000 de digitos com precisão correta.
-<br>Foram necessario 66 minutos de execução para gerar essa precisâo com 2 000 000 de iterações:
+<br>Foram necessario 66 minutos de execução para gerar essa precisão com 2 000 000 de iterações:
 <br>![image](https://user-images.githubusercontent.com/83314109/237039299-a8d55129-50cf-43b6-a527-d5173fcbc273.png)
 <br>Aqui temos uma comparação dos dois códigos em uma execução com 10 000 iterações e podemos visualizar que o Paralelo conseguiu um speedup de 1,375230471736295
 <br>Serial: 
