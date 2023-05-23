@@ -29,6 +29,24 @@ Grupo GGD+
 <br>Comparação dos arquivos:
 <br>![image](https://user-images.githubusercontent.com/83314109/237042200-ff818b92-86ee-45f0-b3b5-0f9bac43dd2e.png)
 
+-----
+
+<br>Decomposição de tarefas
+<br>1. Quais são as tarefas no caminho crítico para cada grafo de dependência? Para responder a pergunta, apresente um DAG do seu projeto.
+<br>![image](https://github.com/oguip/computacao_paralela/assets/26818066/b5e731c7-193b-41af-86be-9061ed6e9c56)
+
+<br>2. Qual é o limite inferior do tempo de execução paralela para cada decomposição?
+<br>Após tentativas malsucedidas de compilação utilizando o Profiler dentro da plataforma da AWS, não foi possível calcular o limite inferior de cada decomposição.
+<br>Entretanto, é possível notar que a parte paralelizável do programa é a função ```serieTaylor```, as demais etapas são sequenciais.
+
+<br>3. Quantos processadores são necessários para se conseguir o tempo mínimo de execução?
+<br>Sem dados experimentais, que seriam obtidos utilizando o profiler, não é possível determinar a quantidade de processadores necessários para se obter o tempo mínimo de execução. Entretanto, hoje, a plataforma da AWS oferece apenas 2 processadores para se utilizar no programa.
+
+<br>4. Qual é o grau máximo de concorrência?
+<br>O Grau máximo de concorrência será o número máximo de tarefas independentes que podem ser executadas simultaneamente. Neste caso, ele está limitado pelo número de termos na função ```serieTaylor```, que será igual a N, nesse caso, 2 milhões. 
+
+<br>5. Qual é o paralelismo médio?
+<br>No caso apresentado, o paralelismo médio será a razão entre o grau máximo de concorrência e a quantidade média de trabalho por thread. Utilizando duas threads, o paralelismo médio será de 1 milhão. Vale notar que o paralelismo médio também será afetado, mesmo que minimamente, pela fração não paralelizada do programa.
 
 
 
