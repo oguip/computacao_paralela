@@ -58,7 +58,7 @@ void save_to_file(mpf_t e, const char *filename) {
         perror("Erro ao abrir o arquivo");
         return;
     }
-    gmp_fprintf(file, "%.10000000Ff\n", e);
+    gmp_fprintf(file, "%.100000000Ff\n", e);
     fclose(file);
 }
 
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     scanf("%d", &n);
     printf("Valor de n = %d\n", n);
     serieTaylor(e, n, thread_count);
-    save_to_file(e, "resultadoParaleloTeste.txt");
+    save_to_file(e, "resultadoParaleloTesteMac.txt");
     printf("\nResultado salvo!");
     gmp_printf("\nPrévia do resultado: %.15Ff",e);
     mpf_clear(e);
